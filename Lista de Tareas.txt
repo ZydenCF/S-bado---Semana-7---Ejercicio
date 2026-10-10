@@ -1,0 +1,4 @@
+Piero: sistema de localización idioma - Spanish
+David: Graph Toolkit - ENG Brit
+Boada: Gameplay - English
+Marco: Juntar todo (Diagrama Clases) - Portugues
