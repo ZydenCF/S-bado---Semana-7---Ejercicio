@@ -33,7 +33,6 @@ namespace BoadaTowerDefense
             return previous;
         }
 
-#if UNITY_EDITOR
         [RuntimeInitializeOnLoadMethod(
             RuntimeInitializeLoadType.AfterSceneLoad)]
         private static void TestFibonacci()
@@ -55,6 +54,5 @@ namespace BoadaTowerDefense
                 Debug.LogException(ex);
             }
         }
-#endif
     }
 }
