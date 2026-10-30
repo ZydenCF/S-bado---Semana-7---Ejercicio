@@ -14,7 +14,31 @@ MonoBehaviour:
   m_EditorClassIdentifier: Unity.Localization::UnityEngine.Localization.Tables.SharedTableData
   m_TableCollectionName: Languages
   m_TableCollectionNameGuidString: 2cf3c1b3e4e017148a22dbd6cdbdd18d
-  m_Entries: []
+  m_Entries:
+  - m_Id: 4981408089935872
+    m_Key: 'BUTTON_START
+
+'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4989663956602880
+    m_Key: BUTTON_MENU
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4997836557946880
+    m_Key: BUTTON_PAUSE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4998880587321344
+    m_Key: 'SETTINGS_BUTTON
+
+'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5221470606102528
+    m_Key: TEXT_LANGUAGE
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:
