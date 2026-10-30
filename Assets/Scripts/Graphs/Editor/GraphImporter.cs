@@ -4,47 +4,57 @@ using Unity.GraphToolkit.Editor;
 using UnityEditor.AssetImporters;
 using UnityEngine;
 
-[ScriptedImporter(1,GenericGraph.AssetExtension)]
+[ScriptedImporter(1, GenericGraph.AssetExtension)]
 public class GraphImporter : ScriptedImporter
 {
-
     public override void OnImportAsset(AssetImportContext context)
     {
         GenericGraph graph = GraphDatabase.LoadGraphForImporter<GenericGraph>(context.assetPath);
         StartNode startNode = graph.GetNodes().OfType<StartNode>().FirstOrDefault();
-        GenericRuntimeGraph runtimeGraph= ScriptableObject.CreateInstance<GenericRuntimeGraph>();
-        INode nextNode=GetNextNode(startNode);
-        while(nextNode!=null)
+
+        GenericRuntimeGraph runtimeGraph = ScriptableObject.CreateInstance<GenericRuntimeGraph>();
+
+      
+        INode currentNode = GetNextNode(startNode);
+
+     
+        while (currentNode != null)
         {
-            List<GenericRuntimeNode> runtimeNodes=ConvertNodesToRuntimeNodes(nextNode);
+            List<GenericRuntimeNode> runtimeNodes = ConvertNodesToRuntimeNodes(currentNode);
             runtimeGraph.nodes.AddRange(runtimeNodes);
-            nextNode=GetNextNode(nextNode);
+
+       
+            currentNode = GetNextNode(currentNode);
         }
+
         context.AddObjectToAsset("RuntimeGraph", runtimeGraph);
         context.SetMainObject(runtimeGraph);
     }
 
-
     static INode GetNextNode(INode currentNode)
     {
         if (currentNode == null) return null;
+
         IPort outputPort = currentNode.GetOutputPortByName(GenericNode.OUTPUT_PORT_NAME);
-        IPort nextNodePort= outputPort.firstConnectedPort;
-        INode nextNode = nextNodePort.GetNode();
-        return nextNode;
+
+      
+        if (outputPort == null || !outputPort.isConnected) return null;
+
+        IPort nextNodePort = outputPort.firstConnectedPort;
+        return nextNodePort?.GetNode();
     }
 
     static List<GenericRuntimeNode> ConvertNodesToRuntimeNodes(INode currentNode)
     {
         List<GenericRuntimeNode> runtimeNodes = new List<GenericRuntimeNode>();
-        switch(currentNode)
+
+        switch (currentNode)
         {
             case TextNode textNode:
                 runtimeNodes.Add(new TextRuntimeNode
                 {
                     text = GetInputPortValue<string>(textNode.GetInputPortByName(TextNode.INPUT_PORT_TEXT)),
                     waitTime = GetInputPortValue<int>(textNode.GetInputPortByName(TextNode.INPUT_PORT_WAIT_TIME))
-
                 });
                 break;
 
@@ -55,27 +65,25 @@ public class GraphImporter : ScriptedImporter
                     waitTime = GetInputPortValue<int>(numberNode.GetInputPortByName(NumberNode.INPUT_PORT_WAIT_TIME))
                 });
                 break;
-
         }
         return runtimeNodes;
     }
 
-
     static T GetInputPortValue<T>(IPort port)
     {
+        if (port == null) return default;
+
         T value = default;
-        if(port.isConnected)
+        if (port.isConnected)
         {
-            switch(port.firstConnectedPort.GetNode())
+            switch (port.firstConnectedPort.GetNode())
             {
                 case IVariableNode variableNode:
                     variableNode.variable.TryGetDefaultValue<T>(out value);
                     return value;
-                    break;
                 case IConstantNode constantNode:
                     constantNode.TryGetValue<T>(out value);
                     return value;
-                    break;
                 default:
                     break;
             }

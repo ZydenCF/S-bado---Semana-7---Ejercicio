@@ -208,4 +208,4 @@ MonoBehaviour:
     - rid: 1299089912590237756
       type: {class: 'Constant`1[[System.Int32, mscorlib]]', ns: Unity.GraphToolkit.Editor, asm: Unity.GraphToolkit.Internal.Editor}
       data:
-        m_Value: 10000
+        m_Value: 3000

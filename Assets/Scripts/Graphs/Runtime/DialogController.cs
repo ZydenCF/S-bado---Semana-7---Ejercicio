@@ -1,3 +1,4 @@
+using System;
 using System.Threading.Tasks;
 using TMPro;
 using UnityEngine;
@@ -7,7 +8,6 @@ public class DialogController : MonoBehaviour
     [SerializeField] private TextMeshProUGUI dialogText;
     [SerializeField] private GenericRuntimeGraph graph;
 
-
     private void Start()
     {
         Resolve();
@@ -15,32 +15,51 @@ public class DialogController : MonoBehaviour
 
     private async void Resolve()
     {
-        await Task.Yield();
-        INodeResolver<TextRuntimeNode> textResolver = new TextResolver();
-        INodeResolver<NumberRuntimeNode> numberResolver= new NumberResolver();
-
-        foreach(GenericRuntimeNode node in graph.nodes)
+        try
         {
-            switch(node)
+            await Task.Yield();
+
+            if (graph == null)
             {
-                case TextRuntimeNode textNode:
-                    await textResolver.Resolve(this, textNode);
-                    break;
-                case NumberRuntimeNode numberNode:
-                    await numberResolver.Resolve(this, numberNode);
-                    break;
+                Debug.LogWarning("No se asignó ningún GenericRuntimeGraph en DialogController.");
+                return;
+            }
+
+            INodeResolver<TextRuntimeNode> textResolver = new TextResolver();
+            INodeResolver<NumberRuntimeNode> numberResolver = new NumberResolver();
+
+            foreach (GenericRuntimeNode node in graph.nodes)
+            {
+                switch (node)
+                {
+                    case TextRuntimeNode textNode:
+                        await textResolver.Resolve(this, textNode);
+                        break;
+                    case NumberRuntimeNode numberNode:
+                        await numberResolver.Resolve(this, numberNode);
+                        break;
+                }
             }
         }
-
+        catch (Exception ex)
+        {
+            Debug.LogError($"Excepción capturada en DialogController: {ex.Message}");
+        }
     }
 
     public void DisplayText(string text)
     {
-        dialogText.text = text;
+        if (dialogText != null)
+        {
+            dialogText.text = text;
+        }
     }
 
     public void DisplayNumber(float number)
     {
-        dialogText.text = $"{number}";
+        if (dialogText != null)
+        {
+            dialogText.text = $"{number}";
+        }
     }
 }
