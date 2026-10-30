@@ -61,6 +61,15 @@
       "source": "builtin",
       "dependencies": {}
     },
+    "com.unity.graphtoolkit": {
+      "version": "https://github.com/needle-mirror/com.unity.graphtoolkit.git",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {
+        "com.unity.modules.uielements": "1.0.0"
+      },
+      "hash": "f6f2fe0386a99ac013d59e0e9d450d90d735bd4d"
+    },
     "com.unity.ide.rider": {
       "version": "3.0.38",
       "depth": 0,
@@ -242,6 +251,13 @@
         "com.unity.modules.jsonserialize": "1.0.0"
       },
       "url": "https://packages.unity.com"
+    },
+    "root": {
+      "version": "https://github.com/microsoftgraph/microsoft-graph-toolkit.git",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "78dad82db0018bb9e4b0ba93873b49fbdfa28e7a"
     },
     "com.unity.modules.accessibility": {
       "version": "1.0.0",
