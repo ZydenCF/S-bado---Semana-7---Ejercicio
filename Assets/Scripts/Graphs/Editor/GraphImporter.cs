@@ -3,6 +3,7 @@ using System.Linq;
 using Unity.GraphToolkit.Editor;
 using UnityEditor.AssetImporters;
 using UnityEngine;
+using UnityEngine.Localization;
 
 [ScriptedImporter(1, GenericGraph.AssetExtension)]
 public class GraphImporter : ScriptedImporter
@@ -53,7 +54,7 @@ public class GraphImporter : ScriptedImporter
             case TextNode textNode:
                 runtimeNodes.Add(new TextRuntimeNode
                 {
-                    text = GetInputPortValue<string>(textNode.GetInputPortByName(TextNode.INPUT_PORT_TEXT)),
+                    localizedText = GetInputPortValue<LocalizedString>(textNode.GetInputPortByName(TextNode.INPUT_PORT_TEXT)),
                     waitTime = GetInputPortValue<int>(textNode.GetInputPortByName(TextNode.INPUT_PORT_WAIT_TIME))
                 });
                 break;

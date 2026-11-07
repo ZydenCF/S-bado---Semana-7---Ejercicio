@@ -19,11 +19,23 @@ MonoBehaviour:
     m_Items: []
   m_TableData:
   - m_Id: 4981408089935872
-    m_Localized: 
+    m_Localized: Start Key
     m_Metadata:
       m_Items: []
   - m_Id: 4989663956602880
-    m_Localized: 
+    m_Localized: Menu
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4998880587321344
+    m_Localized: Settings
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5221470606102528
+    m_Localized: Language Text
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4997836557946880
+    m_Localized: 'Pause '
     m_Metadata:
       m_Items: []
   references:
